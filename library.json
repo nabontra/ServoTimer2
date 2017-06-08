@@ -1,0 +1,11 @@
+{
+    "name": "ServoTimer2",
+    "keywords": "servo, device, control, pwm",
+    "description": "ServoTimer2 is a simple library for Arduino 1.x that does not use Timer1 in case of a conflict.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nabontra/ServoTimer2.git"
+    },
+    "frameworks": "arduino",
+    "platforms": "*"
+}
