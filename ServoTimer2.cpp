@@ -21,6 +21,11 @@ static volatile uint8_t ISRCount;  // iteration counter used in the interrupt ro
 uint8_t ChannelCount = 0;	    // counter holding the number of attached channels
 static boolean isStarted = false;  // flag to indicate if the ISR has been initialised
 
+// Hinzugefügt von Daniel Süsstrunk, 13. November 2017
+int min_pulse_width = 750; // shortest pulse width
+int max_pulse_width = 2250; // longest pulse width
+// Ende Hinzugefügt von Daniel Süsstrunk, 13. November 2017
+
 ISR (TIMER2_OVF_vect)
 { 
   ++ISRCount; // increment the overlflow counter
@@ -69,6 +74,17 @@ uint8_t ServoTimer2::attach(int pin)
 	return this->chanIndex ;
 }
 
+
+// Hinzugefügt von Daniel Süsstrunk, 13. November 2017
+uint8_t ServoTimer2::attach(int pin, int min, int max)
+{
+	min_pulse_width = min; 
+	max_pulse_width = max;
+	return ServoTimer2::attach(pin);
+}
+// Ende Hinzugefügt von Daniel Süsstrunk, 13. November 2017
+
+
 void ServoTimer2::detach()  
 {
     servos[this->chanIndex].Pin.isActive = false;  
@@ -99,10 +115,10 @@ static void writeChan(uint8_t chan, int pulsewidth)
    // calculate and store the values for the given channel
    if( (chan > 0) && (chan <= NBR_CHANNELS) )   // ensure channel is valid
    { 
-	if( pulsewidth < MIN_PULSE_WIDTH )		    // ensure pulse width is valid
-	    pulsewidth = MIN_PULSE_WIDTH;
-	else if( pulsewidth > MAX_PULSE_WIDTH )
-	    pulsewidth = MAX_PULSE_WIDTH;	 
+	if( pulsewidth < min_pulse_width )		    // ensure pulse width is valid
+	    pulsewidth = min_pulse_width;
+	else if( pulsewidth > max_pulse_width )
+	    pulsewidth = max_pulse_width;	 
 	
 	  pulsewidth -=DELAY_ADJUST;			 // subtract the time it takes to process the start and end pulses (mostly from digitalWrite) 
 	servos[chan].counter = pulsewidth / 128;	
