@@ -76,11 +76,11 @@ The pulse width timing is accurate to within 1%
 //typedef uint8_t boolean;
 //typedef uint8_t byte;
 
-#define MIN_PULSE_WIDTH       750        // the shortest pulse sent to a servo  
+#define MIN_PULSE_WIDTH_T2       750        // the shortest pulse sent to a servo  
 
-#define MAX_PULSE_WIDTH      2250        // the longest pulse sent to a servo 
+#define MAX_PULSE_WIDTH_T2      2250        // the longest pulse sent to a servo 
 
-#define DEFAULT_PULSE_WIDTH  1500        // default pulse width when servo is attached
+#define DEFAULT_PULSE_WIDTH_T2  1500        // default pulse width when servo is attached
 
 #define FRAME_SYNC_PERIOD   20000        // total frame duration in microseconds 
 
@@ -92,19 +92,19 @@ typedef struct  {
 
       uint8_t isActive   :1 ;  // false if this channel not enabled, pin only pulsed if true 
 
-   } ServoPin_t   ;  
+   } ServoPin2_t   ;  
 
 
 
 typedef struct {
 
-  ServoPin_t Pin;
+  ServoPin2_t Pin;
 
   byte counter;
 
   byte remainder;
 
-}  servo_t;
+}  servo2_t;
 
 class ServoTimer2
 {
